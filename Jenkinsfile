@@ -39,28 +39,28 @@ pipeline {
 
     // Note: Add gating stage here
     stage ('Manual Ready Check') {
-    agent none
-    when {
-        branch 'master'
+        agent none
+        when {
+          branch 'master'
+        }   
+        options {
+           timeout(time: 30, unit: 'MINUTES')
+         }
+        input {
+          message 'Deploy to Production?'
+         }
+        steps {
+          echo "Deploying"
+         }
     }
-    options {
-        timeout(time: 30, unit: 'MINUTES')
-    }
-    input {
-        message 'Deploy to Production?'
-    }
-    steps {
-        echo "Deploying"
-    }
- }
     // Note: Add prod stage here
     stage("Deploy to Production") {
         agent {
             label "lead-toolchain-skaffold"
-        }
+            }
         when {
             branch 'master'
-        }
+            }
         environment {
             ISTIO_DOMAIN = "${env.productionDomain}"
             PRODUCT_NAME = "${env.product}"

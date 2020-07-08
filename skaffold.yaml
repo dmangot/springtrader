@@ -18,8 +18,8 @@ build:
 deploy:
   helm:
       flags:
-      upgrade: ["--timeout", "600s"]
-      install: ["--timeout", "600s"]
+        upgrade: ["--timeout", "600s"]
+        install: ["--timeout", "600s"]
     releases:
       - name: springtrader 
         chartPath: ./charts/springtrader
